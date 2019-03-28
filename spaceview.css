@@ -1,5 +1,9 @@
+* {
+  margin, padding: 0;
+}
+
 body{
-  background-color: black;
+overflow-x: hidden;
 
 }
 
@@ -9,14 +13,23 @@ body{
   width: 100px;
   height: 100px;
   margin: 10px;
-  display: grid;
 }
 
-canvas {
+/* canvas {
   margin: auto;
   top: 0;
   left: 0;
-  position: absolute;
+  position: absolute; */
   /* uncomment next line to position the canvas BEHIND the HTML */
-  z-index: -1;
+  /* z-index: -1;
+} */
+
+iframe
+{
+    border: none;
+    width: 100vw;
+    height: 100vh;
+    z-index: -99;
+    position: fixed;
+    left, top: 0;
 }
