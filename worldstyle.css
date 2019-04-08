@@ -2,6 +2,19 @@ body
 {
   background-image: url("images/world.png");
   background-size: 100%;
+  background-repeat: no-repeat;
   image-rendering: crisp-edges;
+
+
+}
+
+.cloud
+{
+  height: 30vh;
+  width: 100%;
+}
+
+footer
+{
 
 }
