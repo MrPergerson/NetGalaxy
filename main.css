@@ -1,0 +1,119 @@
+header{
+  margin: none;
+}
+
+.headerimage
+{
+  background-image: url("images/css-1.jpg");
+  background-position: top center;
+  background-size:100%;
+  background-repeat: no-repeat;
+  margin: none;
+  height: 80vh;
+}
+
+.navbar
+{
+  list-style: none;
+  text-align: center;
+  float: right;
+  padding: 20px 0 20px 0;
+}
+
+.navbar>li {
+  display: inline-block;
+  padding-right: 50px;
+}
+
+.navbar>li>a {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 25px;
+  color: #1C1C1C;
+}
+
+.rowimage
+{
+    max-width: 400px;
+    padding-left: 50px;
+    overflow: hidden;
+}
+
+.rowimage img
+{
+  width: 100%;
+  object-fit: contain;
+
+}
+
+.wide-row
+{
+  background-color: #f8f8f8;
+  margin: none;
+  /* height: 50vw; */
+  padding: 30px 30px;
+
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 20px;
+
+
+}
+
+.wide-row.darker
+{
+  background-color: #f2f2f2;
+  padding: inherit;
+
+  padding: 30px 30px;
+
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 20px;
+}
+
+
+
+.rowtext
+{
+  padding: 50px;
+}
+
+.button
+{
+  padding: 20px 10px;
+  background-color: #ff3333;
+}
+
+footer{
+  background-color: #f2f2f2;
+
+}
+
+
+.footerbar
+{
+  list-style: none;
+  text-align: center;
+  margin: 0px;
+  padding: 20px 0 300px 0;
+}
+
+.footerbar>li {
+  display: inline-block;
+  padding-right: 50px;
+}
+
+.footerbar>li>a {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 25px;
+  color: #1C1C1C;
+}
+
+.footerimage img
+{
+  width: 100%;
+  object-fit: contain;
+  image-rendering: crisp-edges;
+}

@@ -1,0 +1,7 @@
+body
+{
+  background-image: url("images/world.png");
+  background-size: 100%;
+  image-rendering: crisp-edges;
+
+}
