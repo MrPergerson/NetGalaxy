@@ -43,8 +43,8 @@ function makeParticles()
     // create particles such that they are spread out
     particle.position.z = zpos;
 
-    var happy = spacemain.mesh;
-    spacemain.scene.add(particle);
+    // var happy = spacemain.mesh;
+    // spacemain.scene.add(particle);
     particle.push(particle);
   }
 }
