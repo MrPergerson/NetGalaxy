@@ -9,12 +9,12 @@ function preLoad()
 
 function setup() {
 	// make canvas full screen
-	createCanvas(windowWidth, windowHeight);
+	createCanvas(windowWidth, windowHeight+300);
 }
 
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(windowWidth, windowHeight+300);
 }
 
 

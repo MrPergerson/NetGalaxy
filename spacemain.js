@@ -5,8 +5,15 @@ var camera, scene, renderer;
 var stars;
 
 var planetmain;
+var viewingPlanet = false;
+var findingNewPlanet = false;
+
 
 planets = [];
+
+planetsToVisit = ["desertplanet.html","pixelplanet.html"];
+var visitIndex = 0;
+var currentPlanet = planetsToVisit[visitIndex];
 
 function setup() {
 
@@ -24,9 +31,13 @@ function setup() {
 
   stars = new THREE.ParticleSystem();
 
+  randomizePlanetsToVisit();
+
   // makeStars();
   makePlanets();
   warpToPlanet();
+
+  document.addEventListener('mousedown', onDocumentMouseDown, false);
 
 }
 
@@ -39,7 +50,7 @@ function draw() {
 
   // camera.position.z += 10;
 
-  runPlanetLoop();
+  runMainPlanetLoop();
 
   renderer.render(scene, camera);
 
@@ -51,9 +62,8 @@ function updatePlanets() {
     planet = planets[i];
     planet.position.z += 3;
 
-    if (planet.position.z > 1000)
-      planet.position.z -= 2000;
-
+    if (planet.position.z > 500)
+      planet.position.z -= 1500;
   }
 }
 
@@ -119,20 +129,58 @@ function warpToPlanet() {
 
 }
 
-function runPlanetLoop() {
+function runMainPlanetLoop() {
 
-  if (planetmain.position.z < camera.position.z-80)
-  {
-    planetmain.position.z += 20;
-  }
-  else
-  {
-    planet
+  if (findingNewPlanet) {   // make planetmain warp away
+    planetmain.position.z += 5;
+    planetmain.position.y -= 5;
+    planetmain.position.x += 5;
+  } else if (viewingPlanet == false) {  // let planetmain warp to camera
+    if (planetmain.position.z < camera.position.z - 80) {
+      planetmain.position.z += 50;
+    } else {
+      viewingPlanet = true;
+      setTimeout(removeMainPlanet, 5000);   // remove planetmain in 5 seconds
+    }
   }
 
-    planetmain.rotation.y += .01;
+  planetmain.rotation.y += .01;
+}
+
+// allow planet to warp away
+function removeMainPlanet() {
+  viewingPlanet = false;
+  findingNewPlanet = true;
+  setTimeout(spawnNewMainPlanet, 3000);
+}
+
+// set new planet to view
+function spawnNewMainPlanet() {
+  planetmain.position.z = -500;
+  planetmain.position.y = 0;
+  planetmain.position.x = 0;
+  findingNewPlanet = false;
+  // choose which page it will link too
+  visitIndex++;
+  if(visitIndex >= planetsToVisit.length) visitIndex = 0;
+  currentPlanet = planetsToVisit[visitIndex];
+}
+
+function onDocumentMouseDown(event) {
+
+  // view the planet if clicked
+  if (viewingPlanet) {
+    document.location.href = currentPlanet;
+  }
 
 }
+
+function randomizePlanetsToVisit()
+{
+  planetsToVisit.sort(function(a, b){return 0.5 - Math.random()});
+}
+
+
 
 
 setup();

@@ -1,0 +1,72 @@
+body
+{
+  background-image: url("../images/world.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  margin: 0px;
+
+
+}
+
+.cloudcontainer
+{
+  height: 30vh;
+  width: 80%;
+  margin: auto;
+}
+
+.cloud.left
+{
+  background-color: #f8f8f8;
+  margin: auto;
+  width: 40%;
+  float: left;
+  min-height: 10vw;
+  padding: 10px 30px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 20px;
+}
+
+.cloud.right
+{
+  background-color: #f8f8f8;
+  margin: auto;
+  width: 40%;
+  float: right;
+  min-height: 10vw;
+  padding: 10px 30px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 20px;
+}
+
+.cloudtext
+{
+
+}
+
+.cloudimage
+{
+    max-width: 400px;
+    padding-left: 50px;
+    overflow: hidden;
+}
+
+.cloudimage img
+{
+  width: 100%;
+  object-fit: contain;
+
+}
+
+/* sets canvas to be aligned to top right of screen
+position absolute will stop it from scrolling */
+canvas {
+  margin: 0px;
+  top: 0;
+  left: 0;
+  position: absolute;
+  /* uncomment next line to position the canvas BEHIND the HTML */
+  /* z-index: -1; */
+}
