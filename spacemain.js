@@ -219,7 +219,7 @@ function spawnNewMainPlanet() {
 
   // choose which page it will link too
   visitIndex++;
-  if (visitIndex > planetsToVisit.length) visitIndex = 0;
+  if (visitIndex >= planetsToVisit.length) visitIndex = 0;
   warpToPlanet();
 
   planetmain.position.z = -500;
