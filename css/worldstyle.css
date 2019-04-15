@@ -1,10 +1,9 @@
 body
 {
   background-image: url("../images/world.png");
-  background-size: 100%;
+  background-position: center;
   background-repeat: no-repeat;
   margin: 0px;
-
 
 }
 
@@ -13,6 +12,19 @@ body
   height: 30vh;
   width: 80%;
   margin: auto;
+}
+
+.cloud
+{
+  background-color: #f8f8f8;
+  margin: auto;
+  width: 40%;
+  min-height: 10vw;
+  padding: 10px 30px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 20px;
+  
 }
 
 .cloud.left

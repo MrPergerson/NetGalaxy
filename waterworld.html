@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="css/waterworldstyle.css">
+  <style>
+    body {
+      margin: 0;
+    }
+
+    /* canvas { width: 100%; height: 100% } */
+  </style>
+</head>
+
+<body>
+  <div class="info">
+    <h2>On a vast water world, you find a single lonely island. Do you wish to explore this area?</h2>
+    <a href="space.html"><h4>Nah, there are cooler things in the universe</h4></a>
+    <a href="waterworld/island.html">RRRR, yes, I'll find me treasure!</a>
+  </div>
+
+  <script src="libraries/three.js"></script>
+  <script src="threejs/three.js-master/examples/js/loaders/GLTFLoader.js"></script>
+  <script>
+    var scene, camera, renderer;
+    var cube;
+    var island
+
+    setup();
+    draw();
+
+    function setup() {
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0000FF);
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+      renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // create loader object
+      var loader = new THREE.GLTFLoader();
+      // Load a glTF resource
+      loader.load(
+        // resource URL
+        'waterworld/scene.gltf',
+        // called when the resource is loaded
+        function(gltf) {
+          scene.add(gltf.scene);
+        },
+        // called when loading has errors
+        undefined,
+        function(error) {
+          console.error(error);
+        });
+
+      camera.position.z = 5;
+      camera.position.y = 3;
+      camera.rotation.x = -0.5;
+
+    }
+
+    function draw() {
+      requestAnimationFrame(draw);
+      renderer.render(scene, camera);
+    }
+  </script>
+
+
+
+</body>
+
+</html>

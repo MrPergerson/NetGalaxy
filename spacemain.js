@@ -2,20 +2,72 @@ if (!Detector.webgl) Detector.addGetWebGLMessage();
 
 var camera, scene, renderer;
 
-var stars;
-
 var planetmain;
 var viewingPlanet = false;
 var findingNewPlanet = false;
-
+var stars;
 
 planets = [];
 
-planetsToVisit = ["desertplanet.html","pixelplanet.html"];
+var pixelplanet = {
+  source: "pixelplanet.html",
+  geo: new THREE.IcosahedronGeometry(150, 0),
+  mat: new THREE.MeshPhongMaterial({
+    shading: THREE.FlatShading,
+    color: 0xa8dc00,
+    ambient: 0x000000,
+    emissive: 0x1b5c54,
+    specular: 0xdcdcdc,
+    shininess: 100
+  })
+};
+var waterworld = {
+  source: "waterworld.html",
+  geo: new THREE.IcosahedronGeometry(150, 0),
+  mat: new THREE.MeshPhongMaterial({
+    shading: THREE.FlatShading,
+    color: 0xdcdcdc,
+    ambient: 0xffffff,
+    emissive: 0x4235a4,
+    specular: 0x8c8c8c,
+    shininess: 30
+  })
+};
+var desertplanet = {
+  source: "desertplanet.html",
+  geo: new THREE.IcosahedronGeometry(150, 0),
+  mat: new THREE.MeshPhongMaterial({
+    shading: THREE.FlatShading,
+    color: 0x5c6113,
+    ambient: 0xffffff,
+    emissive: 0xffa566,
+    specular: 0x000000,
+    shininess: 100
+  })
+};
+var portalworld = {
+  source: "portal.html",
+  geo: new THREE.IcosahedronGeometry(150, 0),
+  mat: new THREE.MeshPhongMaterial({
+    shading: THREE.FlatShading,
+    color: 0xff0000,
+    ambient: 0x9d5f6e,
+    emissive: 0x550f0f,
+    specular: 0xdcdcdc,
+    shininess: 30
+  })
+};
+
+planetsToVisit = [pixelplanet, waterworld, desertplanet, portalworld];
 var visitIndex = 0;
+planetsToVisit = randomizePlanetsToVisit(planetsToVisit);
 var currentPlanet = planetsToVisit[visitIndex];
 
 function setup() {
+
+  scene = new THREE.Scene();
+  // background won't work with threejsplaygnd
+  // scene.background = new THREE.Color("rgb(255, 0, 0)");
 
   var W = window.innerWidth,
     H = window.innerHeight;
@@ -27,15 +79,18 @@ function setup() {
   camera = new THREE.PerspectiveCamera(50, W / H, 1, 10000);
   camera.position.z = 500;
 
-  scene = new THREE.Scene();
+  ambientLight = new THREE.AmbientLight(0x111111);
+  scene.add(ambientLight);
 
-  stars = new THREE.ParticleSystem();
+  hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x000000, 0.33);
+  scene.add(hemisphereLight);
 
-  randomizePlanetsToVisit();
 
-  // makeStars();
+
+  makeStars();
   makePlanets();
-  warpToPlanet();
+  // warpToPlanet();
+  setTimeout(warpToPlanet, 2000);
 
   document.addEventListener('mousedown', onDocumentMouseDown, false);
 
@@ -92,13 +147,15 @@ function makeStars() {
   starGeometry = new THREE.Geometry();
   for (i = 0; i < 5000; i++) {
     var vertex = new THREE.Vector3();
-    vertex.x = 1000 * Math.random() - 500;
-    vertex.y = 1000 * Math.random() - 500;
-    vertex.z = 1000 * Math.random() - 500;
+    var maxRange = 3000;
+    var offset = maxRange / 2;
+    vertex.x = maxRange * Math.random() - offset;
+    vertex.y = maxRange * Math.random() - offset;
+    // vertex.z = 1000 * Math.random() - 500;
     starGeometry.vertices.push(vertex);
   }
   starMaterial = new THREE.ParticleBasicMaterial({
-    size: 5,
+    size: 2,
     sizeAttenuation: false,
     transparent: true
   });
@@ -119,11 +176,12 @@ function particleRender(context) {
 };
 
 function warpToPlanet() {
-  geometry = new THREE.IcosahedronGeometry(150, 0);
-  material = new THREE.MeshNormalMaterial({
-    shading: THREE.FlatShading
-  });
-  planetmain = new THREE.Mesh(geometry, material);
+  // geometry = new THREE.IcosahedronGeometry(150, 0);
+  // material = new THREE.MeshNormalMaterial({
+  //   shading: THREE.FlatShading
+  // })
+  currentPlanet = planetsToVisit[visitIndex]
+  planetmain = new THREE.Mesh(currentPlanet["geo"], currentPlanet["mat"]);
   planetmain.scale.x = planetmain.scale.y = planetmain.scale.z = 0.1;
   scene.add(planetmain);
 
@@ -131,23 +189,24 @@ function warpToPlanet() {
 
 function runMainPlanetLoop() {
 
-  if (findingNewPlanet) {   // make planetmain warp away
+  if(planetmain == null) return;
+
+  if (findingNewPlanet) { // make planetmain warp away
     planetmain.position.z += 5;
     planetmain.position.y -= 5;
     planetmain.position.x += 5;
-  } else if (viewingPlanet == false) {  // let planetmain warp to camera
+  } else if (viewingPlanet == false) { // let planetmain warp to camera
     if (planetmain.position.z < camera.position.z - 80) {
       planetmain.position.z += 50;
     } else {
       viewingPlanet = true;
-      setTimeout(removeMainPlanet, 5000);   // remove planetmain in 5 seconds
+      setTimeout(removeMainPlanet, 3000); // remove planetmain in 5 seconds
     }
   }
 
   planetmain.rotation.y += .01;
 }
 
-// allow planet to warp away
 function removeMainPlanet() {
   viewingPlanet = false;
   findingNewPlanet = true;
@@ -156,31 +215,47 @@ function removeMainPlanet() {
 
 // set new planet to view
 function spawnNewMainPlanet() {
+  scene.remove(planetmain);
+
+  // choose which page it will link too
+  visitIndex++;
+  if (visitIndex > planetsToVisit.length) visitIndex = 0;
+  warpToPlanet();
+
   planetmain.position.z = -500;
   planetmain.position.y = 0;
   planetmain.position.x = 0;
   findingNewPlanet = false;
-  // choose which page it will link too
-  visitIndex++;
-  if(visitIndex >= planetsToVisit.length) visitIndex = 0;
-  currentPlanet = planetsToVisit[visitIndex];
 }
 
 function onDocumentMouseDown(event) {
 
   // view the planet if clicked
   if (viewingPlanet) {
-    document.location.href = currentPlanet;
+
+    document.location.href = currentPlanet["source"];
   }
 
 }
 
-function randomizePlanetsToVisit()
-{
-  planetsToVisit.sort(function(a, b){return 0.5 - Math.random()});
+function randomizePlanetsToVisit(array) {
+  var currentIndex = array.length,
+    temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
 }
-
-
 
 
 setup();
