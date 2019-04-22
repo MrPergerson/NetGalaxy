@@ -1,4 +1,4 @@
-if (!Detector.webgl) Detector.addGetWebGLMessage();
+// if (!Detector.webgl) Detector.addGetWebGLMessage();
 
 var camera, scene, renderer;
 var geometry, material;
