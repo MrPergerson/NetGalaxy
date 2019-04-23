@@ -5,15 +5,15 @@ var mouseY = 0;
 var bgPlanets = [];
 
 setup();
-update();
+
 draw();
 
 function setup()
 {
-  scene = mainspace.scene;
+  scene = main.scene;
 
-  camera = mainspace.camera;
-  renderer = mainspace.renderer.
+  camera = main.camera;
+  renderer = main.renderer;
 
   createStars();
   createBackgroundPlanets(200,1500);

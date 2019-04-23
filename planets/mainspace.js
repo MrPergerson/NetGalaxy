@@ -1,19 +1,28 @@
-var camera, renderer, scene;
 
-setup();
-
-funtion setup()
+var main =
 {
-  scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x1E1E1E);
 
-  var W = window.innerWidth;
-  var H = window.innerHeight;
-  renderer = new THREE.WebGLRenderer();
-  renderer.setSize(W,H);
-  document.body.appendChild(renderer.domElement);
+  scene: {},
+  renderer: {},
+  camera: {},
 
-  camera = new Three.PerspectiveCamera(50, W/H, 1, 10000);
-  camera.position.z = 500;
+  setup: function()
+  {
 
+    this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color(0x1E1E1E);
+
+    var W = window.innerWidth;
+    var H = window.innerHeight;
+    this.renderer = new THREE.WebGLRenderer();
+    this.renderer.setSize(W,H);
+    document.body.appendChild(this.renderer.domElement);
+
+    this.camera = new THREE.PerspectiveCamera(50,  window.innerWidth/window.innerHeight, 1, 10000),
+    this.camera.position.z = 500;
+
+  }
 }
+
+
+  main.setup();

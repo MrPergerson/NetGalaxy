@@ -4,25 +4,18 @@ var exampleplanet1 =
 {
   src: "#",
   geo: new THREE.IcosahedronGeometry(150,0),
-  mat: new THREE.MeshPhongMaterial({
-    shading: THREE.FlatShading,
+  mat: new THREE.MeshBasicMaterial({
+    shading: THREE.flatShading,
     color: 0xa8dc00,
-    ambient: 0x000000,
-    emissive: 0x1b5c54,
-    specular: 0xdcdcdc,
-    shininess: 100
+  })
 }
 var exampleplanet2 =
 {
   source: "waterworld.html",
   geo: new THREE.IcosahedronGeometry(150, 0),
   mat: new THREE.MeshPhongMaterial({
-    shading: THREE.FlatShading,
+    flatShading: true,
     color: 0xdcdcdc,
-    ambient: 0xffffff,
-    emissive: 0x4235a4,
-    specular: 0x8c8c8c,
-    shininess: 30
   })
 };
 var exampleplanet3 =
@@ -30,12 +23,8 @@ var exampleplanet3 =
   source: "desertplanet.html",
   geo: new THREE.IcosahedronGeometry(150, 0),
   mat: new THREE.MeshPhongMaterial({
-    shading: THREE.FlatShading,
+    flatShading: true,
     color: 0x5c6113,
-    ambient: 0xffffff,
-    emissive: 0xffa566,
-    specular: 0x000000,
-    shininess: 100
   })
 };
 var exampleplanet4 =
@@ -43,12 +32,8 @@ var exampleplanet4 =
   source: "portal.html",
   geo: new THREE.IcosahedronGeometry(150, 0),
   mat: new THREE.MeshPhongMaterial({
-    shading: THREE.FlatShading,
+    flatShading: true,
     color: 0xff0000,
-    ambient: 0x9d5f6e,
-    emissive: 0x550f0f,
-    specular: 0xdcdcdc,
-    shininess: 30
   })
 };
 
@@ -60,12 +45,13 @@ planetsInView = [];
 
 setup();
 
-funtion setup()
+function setup()
 {
-  scene = mainspace.scene;
-  renderer = mainspace.renderer
+  scene = main.scene;
+  renderer = main.renderer
+  camera = main.camera;
 
-  camera = mainspace.camera;
+  initiateNextPlanet(viewablePlanetsIndex);
 
 }
 
@@ -74,4 +60,15 @@ function initiateNextPlanet(index)
   planetInView = viewablePlanets[index];
 
   planetMesh = new THREE.Mesh(planetInView["geo"], planetInView["mat"]);
+  planetMesh.scale.set(.2,.2,.2);
+
+  var maxRange = window.innerHeight/2;
+  var offset = maxRange / 2;
+  planetMesh.position.x = maxRange * Math.random() - offset;
+  planetMesh.position.y = maxRange * Math.random() - offset;
+  planetMesh.position.z = -500;
+
+  planetsInView[0] = planetMesh;
+  scene.add(planetMesh);
+  console.log("added " + planetMesh);
 }
