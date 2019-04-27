@@ -1,44 +1,9 @@
-var camera, scene, renderer;
 var mouseX = 0;
 var mouseY = 0;
 
 var bgPlanets = [];
 
-setup();
-
-draw();
-
-function setup()
-{
-  scene = main.scene;
-
-  camera = main.camera;
-  renderer = main.renderer;
-
-  createStars();
-  createBackgroundPlanets(200,1500);
-
-  document.addEventListener('mousemove', onMouseMove, false);
-  window.addEventListener('resize', onWindowResize,false);
-}
-
-//only runs one frame?
-function update()
-{
-
-}
-
-function draw()
-{
-  requestAnimationFrame(draw);
-
-  updateCameraPosition();
-  animateBackgroundPlanets();
-
-  renderer.render(scene, camera);
-}
-
-function createBackgroundPlanets(amount, maxRange)
+function createBackgroundPlanets(scene, amount, maxRange)
 {
   for (var i = 0; i < amount; i++)
   {
@@ -65,7 +30,7 @@ function createBackgroundPlanets(amount, maxRange)
   }
 }
 
-function createStars()
+function createStars(scene)
 {
   starGeometry = new THREE.Geometry();
 
@@ -114,21 +79,6 @@ function animateBackgroundPlanets()
 
 }
 
-function updateCameraPosition()
-{
-
-  var maxY = 50
-  var minY = -maxY;
-  var maxX = ((((maxY*2)*window.innerWidth)/window.innerHeight))/2; // keep aspect ratio
-  var minX = -maxX;
-
-  var mx = Math.max( minX, Math.min( maxX, mouseX ) );
-  var my = Math.max( minY, Math.min( maxY, mouseY ) );
-
-  camera.position.x += ( mx - camera.position.x) * 0.02;
-  camera.position.y += ( - my - camera.position.y) * 0.02;
-}
-
 function increaseScaleOnRepeat(planet, amount)
 {
   if(planet.scale.x < .1)
@@ -138,17 +88,4 @@ function increaseScaleOnRepeat(planet, amount)
   else if (planet.scale.x > .1) {
     planet.scale.set(.1,.1,.1);
   }
-}
-
-function onMouseMove(event)
-{
-  mouseX = ( event.clientX - window.innerWidth/2);
-  mouseY = ( event.clientY - window.innerHeight/2);
-}
-
-function onWindowResize()
-{
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize( window.innerWidth, window.innerHeight );
 }

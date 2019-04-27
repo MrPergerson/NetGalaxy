@@ -1,5 +1,3 @@
-var camera, scene, renderer;
-
 var exampleplanet1 =
 {
   src: "#",
@@ -11,27 +9,27 @@ var exampleplanet1 =
 }
 var exampleplanet2 =
 {
-  source: "waterworld.html",
+  source: "#",
   geo: new THREE.IcosahedronGeometry(150, 0),
-  mat: new THREE.MeshPhongMaterial({
+  mat: new THREE.MeshBasicMaterial({
     flatShading: true,
     color: 0xdcdcdc,
   })
 };
 var exampleplanet3 =
 {
-  source: "desertplanet.html",
+  source: "#",
   geo: new THREE.IcosahedronGeometry(150, 0),
-  mat: new THREE.MeshPhongMaterial({
+  mat: new THREE.MeshBasicMaterial({
     flatShading: true,
     color: 0x5c6113,
   })
 };
 var exampleplanet4 =
 {
-  source: "portal.html",
+  source: "#",
   geo: new THREE.IcosahedronGeometry(150, 0),
-  mat: new THREE.MeshPhongMaterial({
+  mat: new THREE.MeshBasicMaterial({
     flatShading: true,
     color: 0xff0000,
   })
@@ -39,25 +37,13 @@ var exampleplanet4 =
 
 viewablePlanets = [exampleplanet1,exampleplanet2,exampleplanet3,exampleplanet4];
 viewablePlanetsIndex = 0
-
+hasLapsed = false;
 planetsInView = [];
 
-
-setup();
-
-function setup()
+function initiateNextPlanet(scene)
 {
-  scene = main.scene;
-  renderer = main.renderer
-  camera = main.camera;
-
-  initiateNextPlanet(viewablePlanetsIndex);
-
-}
-
-function initiateNextPlanet(index)
-{
-  planetInView = viewablePlanets[index];
+  if(viewablePlanetsIndex >= viewablePlanets.length) viewablePlanetsIndex = 0;
+  planetInView = viewablePlanets[viewablePlanetsIndex++];
 
   planetMesh = new THREE.Mesh(planetInView["geo"], planetInView["mat"]);
   planetMesh.scale.set(.2,.2,.2);
@@ -70,5 +56,25 @@ function initiateNextPlanet(index)
 
   planetsInView[0] = planetMesh;
   scene.add(planetMesh);
-  console.log("added " + planetMesh);
+
+  return planetMesh;
+}
+
+function mainPlanetLapsed()
+{
+  if(hasLapsed)
+  {
+    hasLapsed = false;
+    return true;
+  }
+  else
+    return false;
+}
+
+function animatePlanet(mesh, speed)
+{
+  mesh.position.z += 1;
+
+  if (mesh.position.z > 500)
+    hasLapsed = true;
 }

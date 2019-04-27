@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="planetA.css">
+
+  <div class="header">
+    <div class="container">
+      <!-- <span class="profilepic"> <img src="images/profile photo.png" height="60px"></img></span> -->
+      <div class="links">
+        <ul>
+          <li>
+            <a href="#">Trending: #tag</a>
+          </li>
+          <li>
+            <a href="#">Tag of the day: #dog</a>
+          </li>
+          <li>
+            <button type="button" name="createpost" onclick="openCreatePost()">Create a post</button>
+
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</head>
+
+<body>
+
+  <div id="createpost_bg">
+    <div id="createpost_main">
+      <div id="closepost" onclick="closeCreatePost()">
+        <p style="margin-top:5px; font-weigth:bold;">X</p>
+      </div>
+      <div id="textinput">
+        <input type="text" id="textinputbox" value="">
+      </div>
+      <button type="button" name="postsubmit" onclick="sumbitNewPost()">Post</button>
+    </div>
+  </div>
+
+  <script>
+  function createPost(user, textinput)
+  {
+    var newDiv = document.createElement('div');
+    newDiv.setAttribute('class','post');
+    document.body.appendChild(newDiv);
+
+    var username = document.createElement('div');
+    username.setAttribute('class','username');
+    var name = document.createElement('h4');
+    var text = document.createTextNode(user);
+    name.appendChild(text);
+    username.appendChild(name);
+    newDiv.appendChild(username);
+
+    var content = document.createElement('div');
+    content.setAttribute('class','content');
+    var para = document.createElement('p');
+    var text = document.createTextNode(textinput);
+    para.appendChild(text);
+    content.appendChild(para);
+    newDiv.appendChild(content);
+  }
+
+  </script>
+  <script>
+    var createpost = document.getElementById("createpost_bg");
+    if(!sessionStorage.getItem("hasPosted"))
+      sessionStorage.setItem("hasPosted", "false");
+
+    function openCreatePost()
+    {
+      createpost.style.display = "block";
+    }
+
+    function closeCreatePost()
+    {
+      createpost.style.display = "none";
+    }
+
+    function sumbitNewPost()
+    {
+
+      var text = document.getElementById("textinputbox").value;
+
+
+      if(sessionStorage.getItem("hasPosted") == "true") document.location.href = "error.html";
+      else {
+        createpost.style.display = "none";
+        createPost("Username4", text);
+        sessionStorage.setItem("hasPosted", "true");
+
+        setTimeout(createPost, 2000, "Username2", "Who is this?");
+        setTimeout(createPost, 5000, "Username3", "Idk, I don't like him");
+        setTimeout(createPost, 6000, "Username6", "@Admin");
+        setTimeout(createPost, 7400, "Username3", "I hate when other people come here");
+        setTimeout(createPost, 8000, "Username2", "Yea I agree..");
+      }
+    }
+  </script>
+
+  <div class="post">
+    <div class="username">
+      <h4>Username</h4>
+    </div>
+    <div class="content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div class="engagement">
+
+    </div>
+  </div>
+
+  <div class="post">
+    <div class="username">
+      <h4>Username2</h4>
+    </div>
+    <div class="content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div class="engagement">
+
+    </div>
+  </div>
+
+    <div class="post">
+      <div class="username">
+        <h4>Username3</h4>
+      </div>
+      <div class="content">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </div>
+      <div class="engagement">
+
+      </div>
+    </div>
+</body>
+
+</html>
