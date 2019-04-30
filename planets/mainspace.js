@@ -1,6 +1,7 @@
 var scene, renderer, camera;
 var bdPlanets
 var mainPlanet;
+var currentJob;
 
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
@@ -26,6 +27,7 @@ function setup() {
   createBackgroundPlanets(scene, 200, 1500);
 
   mainPlanet = initiateNextPlanet(scene);
+  currentJob = initiateJob(scene);
 
   // type is case senstive
   window.addEventListener('resize', onWindowResize, false);
