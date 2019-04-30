@@ -35,10 +35,10 @@ var exampleplanet4 =
   })
 };
 
-viewablePlanets = [exampleplanet1,exampleplanet2,exampleplanet3,exampleplanet4];
-viewablePlanetsIndex = 0
-hasLapsed = false;
-planetsInView = [];
+var viewablePlanets = [exampleplanet1,exampleplanet2,exampleplanet3,exampleplanet4];
+var viewablePlanetsIndex = 0
+var hasPlanetLapsed = false;
+var planetsInView = [];
 
 function initiateNextPlanet(scene)
 {
@@ -62,9 +62,9 @@ function initiateNextPlanet(scene)
 
 function mainPlanetLapsed()
 {
-  if(hasLapsed)
+  if(hasPlanetLapsed)
   {
-    hasLapsed = false;
+    hasPlanetLapsed = false;
     return true;
   }
   else
@@ -74,7 +74,7 @@ function mainPlanetLapsed()
 function animatePlanet(mesh, speed)
 {
   mesh.position.z += 1;
-
+  console.log("I'm being called!!");
   if (mesh.position.z > 500)
-    hasLapsed = true;
+    hasPlanetLapsed = true;
 }

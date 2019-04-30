@@ -19,16 +19,18 @@ function initiateJob(scene) {
   var loader = new THREE.GLTFLoader();
   loader.load('../models/job.gltf', onLoad);
 
-  console.log("JobMesh in inititateJob: " + jobMesh.name);
+  return getJobMesh();
 
+}
+
+function getJobMesh()
+{
   return jobMesh;
-
 }
 
 function onLoad(gltf) {
   jobMesh = gltf.scene;
   jobMesh.name = "y";
-  console.log("JobMesh in onLoad: " + jobMesh.name)
 
   jobMesh.children[0].material = new THREE.MeshNormalMaterial();
   jobMesh.children[1].material = new THREE.MeshNormalMaterial();
@@ -52,6 +54,7 @@ function getJobInView() {
 function jobHasLapsed() {
   if (hasLapsed) {
     hasLapsed = false;
+    console.log("joblapsed called :)");
     return true;
   } else
     return false;
@@ -59,7 +62,7 @@ function jobHasLapsed() {
 
 function animateJob(mesh, speed) {
   mesh.position.z += 1;
-
+  //console.log("Mesh position.z: " + mesh.position.z);
   if (mesh.position.z > 500)
     hasLapsed = true;
 }

@@ -28,6 +28,8 @@ function setup() {
 
   mainPlanet = initiateNextPlanet(scene);
   currentJob = initiateJob(scene);
+  console.log("mp id " + mainPlanet.id);
+  console.log("cj id " + currentJob.id);
 
   // type is case senstive
   window.addEventListener('resize', onWindowResize, false);
@@ -39,22 +41,21 @@ function draw() {
   requestAnimationFrame(draw);
 
   updateCameraPosition();
-  animateBackgroundPlanets();
-
-
+  //animateBackgroundPlanets();
 
   if(mainPlanetLapsed())
   {
+    console.log("mainPlanetLapsed!!!");
     scene.remove(mainPlanet);
     mainPlanet = initiateNextPlanet(scene);
   }
   else {
-    animatePlanet(mainPlanet, .3);
+  //  animatePlanet(mainPlanet, .3);
   }
 
+  animateJob(currentJob,1);
 
   renderer.render(scene, camera);
-
 }
 
 // allow mouse movement
