@@ -2,6 +2,7 @@ var scene, renderer, camera;
 var bdPlanets
 var mainPlanet;
 var currentJob;
+var hasCurrentJobLoaded = false;
 
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
@@ -31,12 +32,18 @@ function setup() {
     (loadedObj) =>
     {
     currentJob = loadedObj;
+
     }
   ).catch(
     (message) =>
     {
+    hasCurrentJobLoaded = false;
     console.log(message);
-    setTimeout(function(){ currentJob = getJobMesh() }, 3000);
+    setTimeout(function()
+    {
+       currentJob = getJobMesh();
+       hasCurrentJobLoaded = true;
+    }, 3000);
     }
   );
 
@@ -64,7 +71,7 @@ function draw() {
     //  animatePlanet(mainPlanet, .3);
   }
 
-  animateJob(currentJob, 1);
+  if(hasCurrentJobLoaded) animateJob(currentJob, 1);
 
   renderer.render(scene, camera);
 }

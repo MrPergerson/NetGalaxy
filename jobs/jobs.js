@@ -38,12 +38,11 @@ function getJobMesh(scene)
 }
 
 function onLoad(gltf) {
-  jobMesh= gltf.scene.children[1];
+  console.log("it loaded");
+  jobMesh = createGroupFromImportedScene(gltf.scene);
   jobMesh.name = "y";
 
   //jobMesh.children[0].material = new THREE.MeshNormalMaterial();
-//  jobMesh.children[1].material = new THREE.MeshNormalMaterial();
-  //jobMesh.children[2].material = new THREE.MeshNormalMaterial();
 
   jobMesh.scale.set(20, 20, 20);
 
@@ -55,8 +54,21 @@ function onLoad(gltf) {
 
   scene.add(jobMesh);
 
-  console.log("onLoad " + jobMesh.name);
+  //console.log("onLoad " + jobMesh.name);
 
+}
+
+function createGroupFromImportedScene(gltfScene)
+{
+  var group = new THREE.Group();
+  var length =  gltfScene.children.length;
+  for(i = length-1; i >= 0; i--)
+  {
+    gltfScene.children[i].material = new THREE.MeshNormalMaterial();
+    group.add(gltfScene.children[i]);
+  }
+
+  return group;
 }
 
 function getJobInView() {
