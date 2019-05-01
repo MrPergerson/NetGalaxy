@@ -18,18 +18,6 @@ function initiateJob(scene) {
   var loader = new THREE.GLTFLoader();
   loader.load('../models/job.gltf', onLoad);
 
-
-  return new Promise((resolve, reject)=>
-  {
-    if(typeof jobMesh === "undefined")
-    {
-      reject("jobMesh hasn't loaded yet");
-    }
-    else {
-      console.log("success, jobMesh was loaded!");
-      resolve(jobMesh);
-    }
-  })
 }
 
 function getJobMesh(scene)
@@ -38,11 +26,9 @@ function getJobMesh(scene)
 }
 
 function onLoad(gltf) {
-  console.log("it loaded");
   jobMesh = createGroupFromImportedScene(gltf.scene);
-  jobMesh.name = "y";
-
-  //jobMesh.children[0].material = new THREE.MeshNormalMaterial();
+  jobMesh.name = "job";
+  console.log("it loaded: jobMesh: " + jobMesh + " name: " + jobMesh.name);
 
   jobMesh.scale.set(20, 20, 20);
 
@@ -53,8 +39,6 @@ function onLoad(gltf) {
   jobMesh.position.z = -500;
 
   scene.add(jobMesh);
-
-  //console.log("onLoad " + jobMesh.name);
 
 }
 
@@ -84,9 +68,10 @@ function jobHasLapsed() {
 }
 
 function animateJob(mesh, speed) {
-  //console.log("currentjob " + mesh.name);
   mesh.position.z += speed;
-  //console.log("Mesh position.z: " + mesh.position.z);
+
+
+
   if (mesh.position.z > 500)
     hasJobLapsed = true;
 }

@@ -11,6 +11,7 @@ function createBackgroundPlanets(scene, amount, maxRange)
     geometry = new THREE.IcosahedronBufferGeometry(150,0);
     material = new THREE.MeshNormalMaterial({flatShading: true});
     mesh = new THREE.Mesh(geometry,material);
+    mesh.name = "Star";
 
     // set random location
     var offset = maxRange/2;

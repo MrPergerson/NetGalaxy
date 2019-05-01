@@ -28,24 +28,15 @@ function setup() {
   createBackgroundPlanets(scene, 200, 1500);
 
   mainPlanet = initiateNextPlanet(scene);
-  initiateJob(scene).then(
-    (loadedObj) =>
-    {
-    currentJob = loadedObj;
+  initiateJob(scene);
+  setTimeout(function()
+  {
+     currentJob = getJobMesh();
+     hasCurrentJobLoaded = true;
+     console.log("currentJob: isObject3D = " + currentJob.isObject3D);
+  },
+  3000);
 
-    }
-  ).catch(
-    (message) =>
-    {
-    hasCurrentJobLoaded = false;
-    console.log(message);
-    setTimeout(function()
-    {
-       currentJob = getJobMesh();
-       hasCurrentJobLoaded = true;
-    }, 3000);
-    }
-  );
 
   //console.log("currentjob " + currentJob.name);
 
@@ -108,14 +99,13 @@ function onMouseClick(event) {
 
   raycaster.setFromCamera(mouse, camera);
 
-  var intersects = raycaster.intersectObjects(scene.children);
-  if (intersects.length > 0) {
-    var selected = intersects[0].object; // Mesh IS-A Object3D
+  var intersects = raycaster.intersectObjects(scene.children, true);
+  var length = intersects.length;
+  if (length > 0) {
 
-    if (selected == mainPlanet) {
-      scene.remove(mainPlanet);
-      mainPlanet = initiateNextPlanet(scene);
-    }
+  if (intersects[ 0 ].object.parent === currentJob) {
+    console.log("You clicked a job");
+  }
 
   }
 }

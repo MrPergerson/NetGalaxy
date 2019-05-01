@@ -46,6 +46,7 @@ function initiateNextPlanet(scene)
   planetInView = viewablePlanets[viewablePlanetsIndex++];
 
   planetMesh = new THREE.Mesh(planetInView["geo"], planetInView["mat"]);
+  planetMesh.name = "Planet";
   planetMesh.scale.set(.2,.2,.2);
 
   var maxRange = window.innerHeight/2;
