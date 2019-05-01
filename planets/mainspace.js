@@ -21,15 +21,26 @@ function setup() {
   document.body.appendChild(renderer.domElement);
 
   camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000),
-  camera.position.z = 500;
+    camera.position.z = 500;
 
   createStars(scene);
   createBackgroundPlanets(scene, 200, 1500);
 
   mainPlanet = initiateNextPlanet(scene);
-  currentJob = initiateJob(scene);
-  console.log("mp id " + mainPlanet.id);
-  console.log("cj id " + currentJob.id);
+  initiateJob(scene).then(
+    (loadedObj) =>
+    {
+    currentJob = loadedObj;
+    }
+  ).catch(
+    (message) =>
+    {
+    console.log(message);
+    setTimeout(function(){ currentJob = getJobMesh() }, 3000);
+    }
+  );
+
+  //console.log("currentjob " + currentJob.name);
 
   // type is case senstive
   window.addEventListener('resize', onWindowResize, false);
@@ -37,23 +48,23 @@ function setup() {
   document.addEventListener('mousedown', onMouseClick, false);
 }
 
+
+
 function draw() {
   requestAnimationFrame(draw);
 
   updateCameraPosition();
   //animateBackgroundPlanets();
 
-  if(mainPlanetLapsed())
-  {
+  if (mainPlanetLapsed()) {
     console.log("mainPlanetLapsed!!!");
     scene.remove(mainPlanet);
     mainPlanet = initiateNextPlanet(scene);
-  }
-  else {
-  //  animatePlanet(mainPlanet, .3);
+  } else {
+    //  animatePlanet(mainPlanet, .3);
   }
 
-  animateJob(currentJob,1);
+  animateJob(currentJob, 1);
 
   renderer.render(scene, camera);
 }
@@ -80,8 +91,8 @@ function onMouseMove(event) {
   mouseX = (event.clientX - window.innerWidth / 2);
   mouseY = (event.clientY - window.innerHeight / 2);
 
-  mouse.x =   ( event.clientX / window.innerWidth ) * 2 - 1;
-	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 }
 
 function onMouseClick(event) {
@@ -91,12 +102,10 @@ function onMouseClick(event) {
   raycaster.setFromCamera(mouse, camera);
 
   var intersects = raycaster.intersectObjects(scene.children);
-  if (intersects.length > 0)
-  {
-    var selected = intersects[0].object;  // Mesh IS-A Object3D
+  if (intersects.length > 0) {
+    var selected = intersects[0].object; // Mesh IS-A Object3D
 
-    if(selected == mainPlanet)
-    {
+    if (selected == mainPlanet) {
       scene.remove(mainPlanet);
       mainPlanet = initiateNextPlanet(scene);
     }
