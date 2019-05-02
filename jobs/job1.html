@@ -8,24 +8,6 @@
   <!-- Include stylesheet -->
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-  <!-- <div class="header">
-    <div class="container">s
-      <div class="links">
-        <ul>
-          <li>
-            <a href="#">Link1</a>
-          </li>
-          <li>
-            <a href="#">Link2</a>
-          </li>
-          <li>
-            <a href="#">Link3</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div> -->
-
 </head>
 
 <body>
@@ -48,7 +30,7 @@
     <div id="editor">
 
     </div>
-    <button type="button" name="sumbit">submit</button>
+    <button type="button" name="sumbit" onclick="compileCode()">submit</button>
   </div>
 
   <!-- Include the Quill library -->
@@ -63,6 +45,42 @@
       placeholder: 'Write your code here',
       theme: 'snow'
     });
+
+    var KeyWords = ["ENGINE","REAR_SENSOR","MAIN_CONNECTOR"];
+
+    function getCode()
+    {
+      return quill.getText(0,quill.getLength());
+    }
+
+    function hasKeyWords(text, keywords)
+    {
+      var words = text.split(" ");
+      var keywordCount = 0;
+      console.log(words);
+      for(i = 0; i < words.length; i++)
+      {
+        for(j = 0; j < keywords.length; j++)
+        {
+          if(words[i] == keywords[j]) keywordCount++; // won't stop using the same keyword three times
+        }
+      }
+      console.log("keyword count: " + keywordCount);
+      if(keywordCount == keywords.length) return true;
+      else return false;
+    }
+
+    function compileCode()
+    {
+      var text = getCode();
+      if(hasKeyWords(text, KeyWords))
+      {
+        alert("Compiled with no errors")
+      }
+      else {
+        alert("There were errors")
+      }
+    }
   </script>
 
 </body>
