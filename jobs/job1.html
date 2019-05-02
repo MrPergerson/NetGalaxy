@@ -62,7 +62,16 @@
       {
         for(j = 0; j < keywords.length; j++)
         {
-          if(words[i] == keywords[j]) keywordCount++; // won't stop using the same keyword three times
+          var offset = 2;
+          var word = "";
+          if(words[i].lastIndexOf("\n") > -1)
+          {
+            word = words[i].substring(0,words[i].lastIndexOf("\n"));
+          }
+          else {
+            word = words[i];
+          }
+          if(word.toUpperCase() == keywords[j]) keywordCount++; // won't stop using the same keyword three times
         }
       }
       console.log("keyword count: " + keywordCount);
