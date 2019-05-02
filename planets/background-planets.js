@@ -58,9 +58,8 @@ function createStars(scene)
   scene.add(stars);
 }
 
-function animateBackgroundPlanets()
+function animateBackgroundPlanets(spd)
 {
-  var spd = 3;
 
   for (var i = 0; i < bgPlanets.length; i++)
   {

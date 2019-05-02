@@ -6,7 +6,8 @@ var job1 = {
 var jobs = [job1];
 var jobsIndex = 0
 var hasJobLapsed = false;
-var jobMesh;
+var jobMeshs = [];
+var jobMeshsIndex = 0; // store on computre
 
 
 
@@ -15,18 +16,20 @@ function initiateJob(scene) {
   if (jobsIndex >= jobs.length) jobsIndex = 0;
   job = jobs[jobsIndex++];
 
+
   var loader = new THREE.GLTFLoader();
   loader.load('../models/job.gltf', onLoad);
 
 }
 
-function getJobMesh(scene)
+function getNextJobMesh()
 {
-  return jobMesh;
+  if(jobMeshsIndex >= jobMeshs.length) jobMeshsIndex = 0;
+  return jobMeshs[jobMeshsIndex++];
 }
 
 function onLoad(gltf) {
-  jobMesh = createGroupFromImportedScene(gltf.scene);
+  var jobMesh = createGroupFromImportedScene(gltf.scene);
   jobMesh.name = "job";
   console.log("it loaded: jobMesh: " + jobMesh + " name: " + jobMesh.name);
 
@@ -38,7 +41,7 @@ function onLoad(gltf) {
   jobMesh.position.y = maxRange * Math.random() - offset;
   jobMesh.position.z = -500;
 
-  scene.add(jobMesh);
+  jobMeshs.push(jobMesh);
 
 }
 
@@ -69,8 +72,6 @@ function jobHasLapsed() {
 
 function animateJob(mesh, speed) {
   mesh.position.z += speed;
-
-
 
   if (mesh.position.z > 500)
     hasJobLapsed = true;

@@ -29,13 +29,12 @@ function setup() {
 
   mainPlanet = initiateNextPlanet(scene);
   initiateJob(scene);
-  setTimeout(function()
-  {
-     currentJob = getJobMesh();
-     hasCurrentJobLoaded = true;
-     console.log("currentJob: isObject3D = " + currentJob.isObject3D);
-  },
-  3000);
+  setTimeout(function() {
+      currentJob = getJobMesh();
+      hasCurrentJobLoaded = true;
+      console.log("currentJob: isObject3D = " + currentJob.isObject3D);
+    },
+    1000);
 
 
   //console.log("currentjob " + currentJob.name);
@@ -52,17 +51,18 @@ function draw() {
   requestAnimationFrame(draw);
 
   updateCameraPosition();
-  //animateBackgroundPlanets();
+  animateBackgroundPlanets(10);
 
-  if (mainPlanetLapsed()) {
-    console.log("mainPlanetLapsed!!!");
-    scene.remove(mainPlanet);
-    mainPlanet = initiateNextPlanet(scene);
-  } else {
-    //  animatePlanet(mainPlanet, .3);
+  if (hasCurrentJobLoaded) {
+    if (jobHasLapsed()) {
+      console.log("JobLasped!!!");
+      scene.remove(currentJob);
+      // get new mesh
+    } else {
+      animateJob(currentJob, 5);
+    }
   }
 
-  if(hasCurrentJobLoaded) animateJob(currentJob, 1);
 
   renderer.render(scene, camera);
 }
@@ -103,9 +103,10 @@ function onMouseClick(event) {
   var length = intersects.length;
   if (length > 0) {
 
-  if (intersects[ 0 ].object.parent === currentJob) {
-    console.log("You clicked a job");
-  }
+    if (intersects[0].object.parent === currentJob) {
+      console.log("You clicked a job");
+      document.location.href = "jobs/job1.html";
+    }
 
   }
 }

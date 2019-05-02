@@ -46,47 +46,28 @@
       theme: 'snow'
     });
 
-    var KeyWords = ["ENGINE","REAR_SENSOR","MAIN_CONNECTOR"];
+    var KeyWords = ["ENGINE", "REAR_SENSOR", "MAIN_CONNECTOR"];
 
-    function getCode()
-    {
-      return quill.getText(0,quill.getLength());
+    function getCode() {
+      return quill.getText(0, quill.getLength());
     }
 
-    function hasKeyWords(text, keywords)
-    {
-      var words = text.split(" ");
+    function hasKeyWords(text, keywords) {
       var keywordCount = 0;
       console.log(words);
-      for(i = 0; i < words.length; i++)
-      {
-        for(j = 0; j < keywords.length; j++)
-        {
-          var offset = 2;
-          var word = "";
-          if(words[i].lastIndexOf("\n") > -1)
-          {
-            word = words[i].substring(0,words[i].lastIndexOf("\n"));
-          }
-          else {
-            word = words[i];
-          }
-          if(word.toUpperCase() == keywords[j]) keywordCount++; // won't stop using the same keyword three times
-        }
+      for (k = 0; k < keywords.length; k++) {
+        if (text.toUpperCase().includes(keywords[k])) keywordCount++;
       }
-      console.log("keyword count: " + keywordCount);
-      if(keywordCount == keywords.length) return true;
+
+      if (keywordCount == keywords.length) return true;
       else return false;
     }
 
-    function compileCode()
-    {
+    function compileCode() {
       var text = getCode();
-      if(hasKeyWords(text, KeyWords))
-      {
+      if (hasKeyWords(text, KeyWords)) {
         alert("Compiled with no errors")
-      }
-      else {
+      } else {
         alert("There were errors")
       }
     }
