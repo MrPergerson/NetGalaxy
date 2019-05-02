@@ -7,11 +7,11 @@ var jobs = [job1];
 var jobsIndex = 0
 var hasJobLapsed = false;
 var jobMeshs = [];
-var jobMeshsIndex = 0; // store on computre
+var jobMeshs_Index = 0; // store on computre
 
 
 
-function initiateJob(scene) {
+function initiateAllJobs() {
 
   if (jobsIndex >= jobs.length) jobsIndex = 0;
   job = jobs[jobsIndex++];
@@ -20,12 +20,33 @@ function initiateJob(scene) {
   var loader = new THREE.GLTFLoader();
   loader.load('../models/job.gltf', onLoad);
 
+  // var loader = new THREE.GLTFLoader();
+  // loader.load('../models/job2.gltf', onLoad, onError);
+
+  var loader = new THREE.GLTFLoader();
+  loader.load('../models/job3.gltf', onLoad, onError);
+
+  var loader = new THREE.GLTFLoader();
+  loader.load('../models/job4.gltf', onLoad, onError);
+
+  var loader = new THREE.GLTFLoader();
+  loader.load('../models/job5.gltf', onLoad, onError);
+
+
 }
 
 function getNextJobMesh()
 {
-  if(jobMeshsIndex >= jobMeshs.length) jobMeshsIndex = 0;
-  return jobMeshs[jobMeshsIndex++];
+  if(jobMeshs_Index >= jobMeshs.length) jobMeshs_Index = 0;
+  var jobMesh = jobMeshs[jobMeshs_Index++];
+
+  var maxRange = window.innerHeight / 3;
+  var offset = maxRange / 2;
+  jobMesh.position.x = maxRange * Math.random() - offset;
+  jobMesh.position.y = maxRange * Math.random() - offset;
+  jobMesh.position.z = -500;
+
+  return jobMesh;
 }
 
 function onLoad(gltf) {
@@ -35,14 +56,13 @@ function onLoad(gltf) {
 
   jobMesh.scale.set(20, 20, 20);
 
-  var maxRange = window.innerHeight / 2;
-  var offset = maxRange / 2;
-  jobMesh.position.x = maxRange * Math.random() - offset;
-  jobMesh.position.y = maxRange * Math.random() - offset;
-  jobMesh.position.z = -500;
-
   jobMeshs.push(jobMesh);
 
+}
+
+function onError(message)
+{
+  console.log("!- Failed to load gltf: " + message);
 }
 
 function createGroupFromImportedScene(gltfScene)
@@ -72,6 +92,16 @@ function jobHasLapsed() {
 
 function animateJob(mesh, speed) {
   mesh.position.z += speed;
+
+  var time = Date.now() * 0.001;
+
+  var rx = Math.sin( time * 0.7 ) * 0.01,
+					ry = Math.sin( time * 0.3 ) * 0.01,
+					rz = Math.sin( time * 0.2 ) * 0.01;
+
+  mesh.rotation.x += rx;
+  mesh.rotation.y += ry;
+  mesh.rotation.z += rz;
 
   if (mesh.position.z > 500)
     hasJobLapsed = true;

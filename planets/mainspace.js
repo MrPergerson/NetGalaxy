@@ -22,17 +22,17 @@ function setup() {
   document.body.appendChild(renderer.domElement);
 
   camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000),
-    camera.position.z = 500;
+  camera.position.z = 500;
 
   createStars(scene);
   createBackgroundPlanets(scene, 200, 1500);
 
   mainPlanet = initiateNextPlanet(scene);
-  initiateJob(scene);
+  initiateAllJobs();
   setTimeout(function() {
-      currentJob = getJobMesh();
+      currentJob = getNextJobMesh();
       hasCurrentJobLoaded = true;
-      console.log("currentJob: isObject3D = " + currentJob.isObject3D);
+      scene.add(currentJob);
     },
     1000);
 
@@ -57,7 +57,8 @@ function draw() {
     if (jobHasLapsed()) {
       console.log("JobLasped!!!");
       scene.remove(currentJob);
-      // get new mesh
+      currentJob = getNextJobMesh();
+      scene.add(currentJob);
     } else {
       animateJob(currentJob, 5);
     }
