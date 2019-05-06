@@ -9,6 +9,9 @@ var hasJobLapsed = false;
 var jobMeshs = [];
 var jobMeshs_Index = 0; // store on computre
 
+var jobSrc = ["jobs/job1.html","jobs/job2.html","jobs/job3.html","jobs/job4.html"];
+var jobSrc_index = 0;
+var jobSrc_locked = false;
 
 
 function initiateAllJobs() {
@@ -31,6 +34,7 @@ function initiateAllJobs() {
 
   var loader = new THREE.GLTFLoader();
   loader.load('../models/job5.gltf', onLoad, onError);
+
 
 
 }
@@ -85,9 +89,27 @@ function getJobInView() {
 function jobHasLapsed() {
   if (hasJobLapsed) {
     hasJobLapsed = false;
+    jobSrc_locked = false;
     return true;
   } else
     return false;
+}
+
+function getNextJobSrc()
+{
+  if(jobSrc_locked == false)
+  {
+    if(jobSrc_index >= jobSrc.length)
+    {
+      jobSrc_index = 0;
+      // make index store on browser
+      document.location.href = "../theend.html";
+    }
+    jobSrc_locked = true;
+    return jobSrc[jobSrc_index++];
+
+  }
+
 }
 
 function animateJob(mesh, speed) {

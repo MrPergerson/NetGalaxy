@@ -34,7 +34,7 @@ function setup() {
       hasCurrentJobLoaded = true;
       scene.add(currentJob);
     },
-    1000);
+    2000);
 
 
   //console.log("currentjob " + currentJob.name);
@@ -105,8 +105,8 @@ function onMouseClick(event) {
   if (length > 0) {
 
     if (intersects[0].object.parent === currentJob) {
-      console.log("You clicked a job");
-      document.location.href = "jobs/job1.html";
+      //console.log(getNextJobSrc());
+      document.location.href = getNextJobSrc();
     }
 
   }
