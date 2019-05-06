@@ -4,21 +4,16 @@ var job1 = {
 }
 
 var jobs = [job1];
-var jobsIndex = 0
 var hasJobLapsed = false;
 var jobMeshs = [];
 var jobMeshs_Index = 0; // store on computre
 
 var jobSrc = ["jobs/job1.html","jobs/job2.html","jobs/job3.html","jobs/job4.html"];
-var jobSrc_index = 0;
+
 var jobSrc_locked = false;
 
 
 function initiateAllJobs() {
-
-  if (jobsIndex >= jobs.length) jobsIndex = 0;
-  job = jobs[jobsIndex++];
-
 
   var loader = new THREE.GLTFLoader();
   loader.load('../models/job.gltf', onLoad);
@@ -41,8 +36,10 @@ function initiateAllJobs() {
 
 function getNextJobMesh()
 {
+  var jobMeshs_Index = parseInt(localStorage.getItem('meshindex'),10);
   if(jobMeshs_Index >= jobMeshs.length) jobMeshs_Index = 0;
-  var jobMesh = jobMeshs[jobMeshs_Index++];
+  var jobMesh = jobMeshs[jobMeshs_Index];
+  localStorage.setItem('meshindex',(jobMeshs_Index+1).toString());
 
   var maxRange = window.innerHeight / 3;
   var offset = maxRange / 2;
@@ -99,14 +96,19 @@ function getNextJobSrc()
 {
   if(jobSrc_locked == false)
   {
+    var jobSrc_index = parseInt(localStorage.getItem('jobindex'),10);
+    console.log(jobSrc_index);
     if(jobSrc_index >= jobSrc.length)
     {
-      jobSrc_index = 0;
+      localStorage.setItem('jobindex','0');
       // make index store on browser
-      document.location.href = "../theend.html";
+      return "../theend.html";
     }
-    jobSrc_locked = true;
-    return jobSrc[jobSrc_index++];
+    else {
+      jobSrc_locked = true;
+      localStorage.setItem('jobindex',(jobSrc_index+1).toString());
+      return jobSrc[jobSrc_index];
+    }
 
   }
 

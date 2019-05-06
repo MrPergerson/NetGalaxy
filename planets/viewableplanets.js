@@ -4,7 +4,7 @@ var exampleplanet1 =
   geo: new THREE.IcosahedronGeometry(150,0),
   mat: new THREE.MeshBasicMaterial({
     shading: THREE.flatShading,
-    color: 0xa8dc00,
+    color: 0xffd400,
   })
 }
 var exampleplanet2 =
