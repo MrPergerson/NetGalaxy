@@ -102,7 +102,7 @@ function getNextJobSrc()
     {
       localStorage.setItem('jobindex','0');
       // make index store on browser
-      return "../theend.html";
+      return "theend.html";
     }
     else {
       jobSrc_locked = true;
