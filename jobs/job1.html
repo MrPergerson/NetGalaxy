@@ -56,6 +56,7 @@
     });
 
     var KeyWords = ["ENGINE", "REAR_SENSOR", "MAIN_CONNECTOR"];
+    var ErrorList = [];
 
     function getCode() {
       return quill.getText(0, quill.getLength());
@@ -65,6 +66,7 @@
       var keywordCount = 0;
       for (k = 0; k < keywords.length; k++) {
         if (text.toUpperCase().includes(keywords[k])) keywordCount++;
+        else ErrorList.push(keywords[k]);
       }
 
       if (keywordCount == keywords.length) return true;
@@ -74,9 +76,11 @@
     function compileCode() {
       var text = getCode();
       if (hasKeyWords(text, KeyWords)) {
-        alert("Compiled with no errors")
+        a  alert("Success! You're amazing");
+          setTimeout(function() {document.location.href = "../space.html"},1000);
       } else {
-        alert("There were errors")
+        alert("Compiler Error: Couldn't find the following -> [ " + ErrorList + "]");
+        ErrorList = [];
       }
     }
   </script>
