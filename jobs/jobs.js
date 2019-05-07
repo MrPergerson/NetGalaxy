@@ -61,9 +61,9 @@ function onLoad(gltf) {
 
 }
 
-function onError(message)
+function onError(error)
 {
-  console.log("!- Failed to load gltf: " + message);
+  console.log("!- Failed to load gltf: " + error);
 }
 
 function createGroupFromImportedScene(gltfScene)
