@@ -14,9 +14,9 @@
 
 
   <div class="content">
-      <div class="title">
-<h3>QUEST: Engine isn't working</h3>
-      </div>
+    <div class="title">
+      <h3>QUEST: Engine isn't working</h3>
+    </div>
     <div class="text">
 
       <p>As you travel through the net waves, you stumble across a lone ship. Upon a closer look, it appears to be a damaged merchant ship. You see a figure in a space suit trying their best to repair the ship. The space around is dark and lonely,
@@ -26,7 +26,7 @@
         controlling it. I also fear that there may be space goblins lurking around and my turret sensor got damaged as well. I’m just a setting duck here! Will you help me?”
         <br><br>
         <h3>Great! This is your chance to shine! <br>
-        Figure how to get the ship up and running by fixing these items: </h3>
+          Figure how to get the ship up and running by fixing these items: </h3>
       </p>
       <h4>ENGINE</h4>
       <h4>REAR_SENSOR</h4>
@@ -76,8 +76,10 @@
     function compileCode() {
       var text = getCode();
       if (hasKeyWords(text, KeyWords)) {
-        a  alert("Success! You're amazing");
-          setTimeout(function() {document.location.href = "../space.html"},1000);
+        alert("Success! You're amazing");
+        setTimeout(function() {
+          document.location.href = "../space.html"
+        }, 1000);
       } else {
         alert("Compiler Error: Couldn't find the following -> [ " + ErrorList + "]");
         ErrorList = [];
